@@ -10,27 +10,6 @@ import Saved from './components/Saved/Saved';
 
 class App extends Component {
 
-  componentDidMount() {
-    axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:harry`
-      ).then(bookData => {
-        const book = {
-          title: bookData.data.items[0].volumeInfo.title,
-          author: bookData.data.items[0].volumeInfo.authors,
-          description: bookData.data.items[0].volumeInfo.description,
-          image: bookData.data.items[0].volumeInfo.imageLinks.thumbnail,
-          link: bookData.data.items[0].volumeInfo.infoLink
-        }
-        this.setData(book)
-        console.log(book.title)
-        console.log(book.author)
-        console.log(book.description)
-        console.log(book.image)
-        console.log(book.link)
-      })
-  }
-
   constructor(props) {
     super(props);
     this.State = {
@@ -40,6 +19,7 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.setData = this.setData.bind(this)
     this.userInput = this.userInput.bind(this)
+    this.getBook = this.getBook.bind(this)
   }
 
   setData(data) {
@@ -50,7 +30,33 @@ class App extends Component {
     )
   }
 
+  getBook() {
+    const userInput = this.state.value
+    axios
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=:${userInput}`
+      ).then(bookData => {
+        for (let i = 0; i < bookData.data.items.length; i++) {
+          console.log(bookData.data.items[i])
+          const book = {
+            title: bookData.data.items[i].volumeInfo.title,
+            author: bookData.data.items[i].volumeInfo.authors,
+            description: bookData.data.items[i].volumeInfo.description,
+            image: bookData.data.items[i].volumeInfo.imageLinks.thumbnail,
+            link: bookData.data.items[i].volumeInfo.infoLink
+          }
+          this.setData(book)
+          console.log(book.title)
+          console.log(book.author)
+          console.log(book.description)
+          console.log(book.image)
+          console.log(book.link)
+        }
+      })
+  }
+
   handleClick() {
+    this.getBook();
     console.log('User has inputted: ' + this.state.value)
   }
 

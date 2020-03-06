@@ -2,12 +2,12 @@ import React from 'react'
 import './Search.css'
 import '../Results/Results'
 
-function Search() {
+function Search(props) {
     return (
         <div>
             <input type="text" className="searchBooks" placeholder="Search A Book"></input>
-            <input type="submit" className="submitBtn"></input>
-        </div>
+            <button onClick={props.click} type="submit" className="submitBtn">Submit</button>
+        </div >
     )
 }
 

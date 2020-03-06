@@ -10,18 +10,50 @@ import Saved from './components/Saved/Saved';
 
 class App extends Component {
 
-  constructor() {
-    super();
-    this.setState =
-    {
-      books: []
+  constructor(props) {
+    super(props);
+    this.State = {
+      bookData: {}
     };
+    this.handleClick = this.handleClick.bind(this)
+    this.setData = this.setData.bind(this)
+  }
+
+  setData(data) {
+    this.setState(
+      {
+        bookData: data
+      }
+    )
+  }
+
+  componentDidMount() {
+    axios
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=intitle:harry`
+      ).then(bookData => {
+        const book = {
+          title: bookData.data.items[0].volumeInfo.title,
+          author: bookData.data.items[0].volumeInfo.authors,
+          description: bookData.data.items[0].volumeInfo.description,
+          image: bookData.data.items[0].volumeInfo.imageLinks.thumbnail,
+          link: bookData.data.items[0].volumeInfo.infoLink
+        }
+        this.setData(book)
+        console.log(book.title)
+        console.log(book.author)
+        console.log(book.description)
+        console.log(book.image)
+        console.log(book.link)
+      })
+  }
+
+  handleClick() {
+
+    console.log('testing to see if button works')
   }
 
 
-  getBooks = () => {
-    axios.get('/')
-  }
 
   render() {
     return (
@@ -34,7 +66,7 @@ class App extends Component {
           <Switch>
 
             <Route exact path="/">
-              <Search></Search>
+              <Search click={this.handleClick} />
               <Results></Results>
             </Route>
 

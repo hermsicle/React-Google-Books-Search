@@ -1,3 +1,12 @@
 * {
     text-align: center;
 }
+
+.link {
+    text-decoration: none;
+}
+
+.link:hover{
+    cursor: pointer;
+    color: green;
+}

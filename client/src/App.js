@@ -10,23 +10,6 @@ import Saved from './components/Saved/Saved';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.State = {
-      bookData: {}
-    };
-    this.handleClick = this.handleClick.bind(this)
-    this.setData = this.setData.bind(this)
-  }
-
-  setData(data) {
-    this.setState(
-      {
-        bookData: data
-      }
-    )
-  }
-
   componentDidMount() {
     axios
       .get(
@@ -48,11 +31,34 @@ class App extends Component {
       })
   }
 
-  handleClick() {
-
-    console.log('testing to see if button works')
+  constructor(props) {
+    super(props);
+    this.State = {
+      bookData: {},
+      value: ''
+    };
+    this.handleClick = this.handleClick.bind(this)
+    this.setData = this.setData.bind(this)
+    this.userInput = this.userInput.bind(this)
   }
 
+  setData(data) {
+    this.setState(
+      {
+        bookData: data
+      }
+    )
+  }
+
+  handleClick() {
+    console.log('User has inputted: ' + this.state.value)
+  }
+
+  userInput(event) {
+    this.setState({
+      value: event.target.value
+    })
+  }
 
 
   render() {
@@ -66,7 +72,10 @@ class App extends Component {
           <Switch>
 
             <Route exact path="/">
-              <Search click={this.handleClick} />
+              <Search
+                click={this.handleClick}
+                value={this.userInput}
+              />
               <Results></Results>
             </Route>
 

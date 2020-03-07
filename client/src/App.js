@@ -12,14 +12,8 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.State = {
-      bookData: {
-        title: '',
-        author: '',
-        description: '',
-        image: '',
-        link: ''
-      },
+    this.state = {
+      bookData: {},
       value: '',
     };
     this.handleClick = this.handleClick.bind(this)
@@ -40,7 +34,7 @@ class App extends Component {
             title: bookItems[i].volumeInfo.title,
             author: bookItems[i].volumeInfo.authors,
             description: bookItems[i].volumeInfo.description,
-            image: bookItems[i].volumeInfo.imageLinks,
+            image: bookItems[i].volumeInfo.imageLinks.thumbnail,
             link: bookItems[i].volumeInfo.infoLink
           }
           this.setState({
@@ -62,9 +56,6 @@ class App extends Component {
     })
   }
 
-
-
-
   render() {
     return (
       <div className="App">
@@ -81,7 +72,10 @@ class App extends Component {
                 value={this.userInput}
               />
               <Results
-                book={this.renderResults}
+                title={this.state.bookData.title}
+                author={this.state.bookData.author}
+                image={this.state.bookData.image}
+                description={this.state.bookData.description}
               >
               </Results>
             </Route>

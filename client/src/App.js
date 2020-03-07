@@ -13,21 +13,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.State = {
-      bookData: {},
-      value: ''
+      bookData: {
+        title: '',
+        author: '',
+        description: '',
+        image: '',
+        link: ''
+      },
+      value: '',
     };
     this.handleClick = this.handleClick.bind(this)
-    this.setData = this.setData.bind(this)
     this.userInput = this.userInput.bind(this)
     this.getBook = this.getBook.bind(this)
-  }
-
-  setData(data) {
-    this.setState(
-      {
-        bookData: data
-      }
-    )
   }
 
   getBook() {
@@ -36,21 +33,20 @@ class App extends Component {
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=:${userInput}`
       ).then(bookData => {
-        for (let i = 0; i < bookData.data.items.length; i++) {
-          console.log(bookData.data.items[i])
+        let bookItems = bookData.data.items;
+        for (let i = 0; i < bookItems.length; i++) {
+          //console.log(bookItems[i])
           const book = {
-            title: bookData.data.items[i].volumeInfo.title,
-            author: bookData.data.items[i].volumeInfo.authors,
-            description: bookData.data.items[i].volumeInfo.description,
-            image: bookData.data.items[i].volumeInfo.imageLinks.thumbnail,
-            link: bookData.data.items[i].volumeInfo.infoLink
+            title: bookItems[i].volumeInfo.title,
+            author: bookItems[i].volumeInfo.authors,
+            description: bookItems[i].volumeInfo.description,
+            image: bookItems[i].volumeInfo.imageLinks,
+            link: bookItems[i].volumeInfo.infoLink
           }
-          this.setData(book)
-          console.log(book.title)
-          console.log(book.author)
-          console.log(book.description)
-          console.log(book.image)
-          console.log(book.link)
+          this.setState({
+            bookData: book
+          })
+          console.log(this.state.bookData)
         }
       })
   }
@@ -65,6 +61,8 @@ class App extends Component {
       value: event.target.value
     })
   }
+
+
 
 
   render() {
@@ -82,7 +80,10 @@ class App extends Component {
                 click={this.handleClick}
                 value={this.userInput}
               />
-              <Results></Results>
+              <Results
+                book={this.renderResults}
+              >
+              </Results>
             </Route>
 
             <Route exact path="/saved">

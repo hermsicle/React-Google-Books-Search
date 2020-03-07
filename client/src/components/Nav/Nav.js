@@ -3,8 +3,10 @@ import './Nav.css'
 
 function Nav() {
     return (
-        <div>
-            <h1>Hello From Nav Bar</h1>
+        <div className="nav">
+            <h3 className="appName">Google Books</h3>
+            <a href="/">Search</a>
+            <a href="/saved">Saved</a>
         </div>
     )
 }

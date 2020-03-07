@@ -1,0 +1,19 @@
+.bookSearch {
+    height: 10vh;
+    background-color: teal;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchBooks {
+    display: flex;
+    width: 960px;
+}
+
+.submitBtn {
+    width: 50px;
+    display: flex;
+    margin-top: 10px;
+}

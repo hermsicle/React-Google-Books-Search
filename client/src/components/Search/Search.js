@@ -4,7 +4,7 @@ import '../Results/Results'
 
 function Search(props) {
     return (
-        <div>
+        <div className="bookSearch">
             <input
                 type="text"
                 className="searchBooks"
@@ -19,6 +19,10 @@ function Search(props) {
                 value="submit">
                 Submit
             </button>
+
+            <div className="searchResults">
+
+            </div>
         </div >
     )
 }

@@ -1,0 +1,17 @@
+.resultsContainer {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.save {
+    display: flex;
+    width: 50px;
+}
+.view {
+    display: flex;
+    width: 50px;
+}
+

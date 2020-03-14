@@ -10,3 +10,37 @@
     cursor: pointer;
     color: green;
 }
+
+.resultsContainer {
+    border: 1px solid black;
+    margin: 10px;
+    display: flex;
+    background-color: teal;
+    flex-direction: column;
+    align-items: center;
+}
+.title {
+    display: flex;
+}
+.savedContainer {
+    border: 1px solid black;
+    margin: 10px;
+    display: flex;
+    background-color: teal;
+    flex-direction: column;
+    align-items: center;
+}
+.savedTitle{
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+}
+.delete{
+    width: 150px;
+}
+.view {
+    width: 150px;
+}
+.save {
+    width: 150px;
+}

@@ -67,8 +67,8 @@ class App extends Component {
   renderAll() {
     return (this.state.bookData.map((book, index) => {
       return (
-        <div key={index}>
-          <h3>Book Title: {book.title}</h3>
+        <div className="resultsContainer" key={index}>
+          <h3 className="title">Book Title: {book.title}</h3>
           <h4>Authors: {book.author}</h4>
           <img src={book.image} alt="" className="imgContainer"></img>
           <p>Description:{book.description}</p>
@@ -92,8 +92,8 @@ class App extends Component {
   renderSavedBooks() {
     return (this.state.savedBooks.map((books, index) => {
       return (
-        <div key={index}>
-          <h3>Book Title: {books.title}</h3>
+        <div className="savedContainer" key={index}>
+          <h3 className="savedTitle">Book Title: {books.title}</h3>
           <h4>Authors: {books.author}</h4>
           <img src={books.image}
             alt=""
@@ -101,13 +101,18 @@ class App extends Component {
           </img>
           <p>Description:{books.description}</p>
           <p>Link: {books.link}</p>
-          <button className="delete">delete</button>
+          <button className="delete" onClick={() => this.deleteBook()}>delete</button>
           <button className="view">View</button>
-        </div>
+        </div >
       )
     })
     )
   }
+
+  deleteBook() {
+    axios.get("/api/books/:")
+  }
+
 
 
   render() {
@@ -139,11 +144,10 @@ class App extends Component {
             </Route>
 
             <Route exact path="/saved">
-              {this.renderSavedBooks()}
               <Saved
               >
               </Saved>
-
+              {this.renderSavedBooks()}
             </Route>
 
           </Switch>

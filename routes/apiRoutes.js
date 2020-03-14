@@ -25,7 +25,13 @@ router.post("/books", (req, res) => {
 })
 
 //create route to findOne book 
-
+router.get('/find/:id', (req, res) => {
+    db.GoogleBooks.findOne({})
+        .then(foundBook => {
+            console.log(foundBook)
+            res.json(foundBook)
+        })
+})
 
 //Create api delete request to delete specific books
 router.delete("/books:id", (req, res) => {

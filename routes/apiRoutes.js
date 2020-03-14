@@ -5,7 +5,8 @@ const db = require('../models');
 //Create api get request to see all books
 router.get("/books", (req, res) => {
     db.GoogleBooks.find().then(books => {
-        res.send(books)
+        //console.log(books)
+        res.json(books)
     })
 })
 
@@ -22,6 +23,9 @@ router.post("/books", (req, res) => {
         res.json(newBook)
     })
 })
+
+//create route to findOne book 
+
 
 //Create api delete request to delete specific books
 router.delete("/books:id", (req, res) => {

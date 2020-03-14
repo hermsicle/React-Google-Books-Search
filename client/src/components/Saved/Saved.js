@@ -1,9 +1,12 @@
 import React from 'react'
 
-function Saved() {
+function Saved(props) {
     return (
-        <div>
-            <h1>Hello from the saved page</h1>
+        <div className="savedPage">
+            <h3>Saved Books</h3>
+            <div className="savedBooks">
+
+            </div>
         </div>
     )
 }

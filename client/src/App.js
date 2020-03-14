@@ -5,7 +5,7 @@ import './App.css';
 import Nav from './components/Nav/Nav';
 import Search from './components/Search/Search';
 import axios from 'axios'
-import Results from './components/Results/Results';
+//import Results from './components/Results/Results';
 import Saved from './components/Saved/Saved';
 
 class App extends Component {
@@ -14,36 +14,15 @@ class App extends Component {
     super(props);
     this.state = {
       bookData: [],
-      books: [],
+      savedBooks: [],
       value: '',
     };
     this.handleClick = this.handleClick.bind(this)
     this.userInput = this.userInput.bind(this)
     this.getBook = this.getBook.bind(this)
     this.renderAll = this.renderAll.bind(this)
+    this.instanceFunction = this.instanceFunction.bind(this)
   }
-
-  // componentDidMount() {
-  //   this.getBook()
-  //     .then(bookData => {
-  //       let bookItems = bookData.data.items;
-  //       for (let i = 0; i < bookItems.length; i++) {
-  //         //console.log(bookItems[i])
-  //         const book = {
-  //           title: bookItems[i].volumeInfo.title,
-  //           author: bookItems[i].volumeInfo.authors,
-  //           description: bookItems[i].volumeInfo.description,
-  //           image: bookItems[i].volumeInfo.imageLinks.thumbnail,
-  //           link: bookItems[i].volumeInfo.infoLink
-  //         }
-  //         this.setState({
-  //           bookData: book
-  //         })
-  //         console.log(this.state.bookData);
-  //       }
-  //     })
-  // }
-
 
   async getBook() {
     const userInput = this.state.value
@@ -78,8 +57,11 @@ class App extends Component {
       value: event.target.value
     })
   }
+
   instanceFunction(index) {
-    axios.post("/api/books", this.state.bookData[index]).then(response => console.log(response))
+    axios.post("/api/books", this.state.bookData[index])
+      .then(response =>
+        console.log(response))
   }
 
   renderAll() {
@@ -92,6 +74,34 @@ class App extends Component {
           <p>Description:{book.description}</p>
           <p>Link: {book.link}</p>
           <button className="save" onClick={() => this.instanceFunction(index)}>Save</button>
+          <button className="view">View</button>
+        </div>
+      )
+    })
+    )
+  }
+
+  componentDidMount() {
+    axios.get('/api/books')
+      .then(res => {
+        const book = res.data;
+        this.setState({ savedBooks: book })
+      })
+  }
+
+  renderSavedBooks() {
+    return (this.state.savedBooks.map((books, index) => {
+      return (
+        <div key={index}>
+          <h3>Book Title: {books.title}</h3>
+          <h4>Authors: {books.author}</h4>
+          <img src={books.image}
+            alt=""
+            className="imgContainer">
+          </img>
+          <p>Description:{books.description}</p>
+          <p>Link: {books.link}</p>
+          <button className="delete">delete</button>
           <button className="view">View</button>
         </div>
       )
@@ -118,19 +128,22 @@ class App extends Component {
                 value={this.userInput}
               />
               {this.renderAll()}
-              <Results
+              {/* <Results
                 title={this.state.bookData.title}
                 author={this.state.bookData.author}
                 image={this.state.bookData.image}
                 description={this.state.bookData.description}
                 link={this.state.bookData.link}
-
               >
-              </Results>
+              </Results> */}
             </Route>
 
             <Route exact path="/saved">
-              <Saved></Saved>
+              {this.renderSavedBooks()}
+              <Saved
+              >
+              </Saved>
+
             </Route>
 
           </Switch>

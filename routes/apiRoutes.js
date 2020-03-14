@@ -18,7 +18,8 @@ router.post("/books", (req, res) => {
         image: req.body.image,
         link: req.body.link
     }).then(newBook => {
-        res.send(newBook)
+        console.log(newBook)
+        res.json(newBook)
     })
 })
 

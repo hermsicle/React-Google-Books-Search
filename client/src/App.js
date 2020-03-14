@@ -13,36 +13,59 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookData: {},
+      bookData: [],
+      books: [],
       value: '',
     };
     this.handleClick = this.handleClick.bind(this)
     this.userInput = this.userInput.bind(this)
     this.getBook = this.getBook.bind(this)
+    this.renderAll = this.renderAll.bind(this)
   }
 
-  getBook() {
+  // componentDidMount() {
+  //   this.getBook()
+  //     .then(bookData => {
+  //       let bookItems = bookData.data.items;
+  //       for (let i = 0; i < bookItems.length; i++) {
+  //         //console.log(bookItems[i])
+  //         const book = {
+  //           title: bookItems[i].volumeInfo.title,
+  //           author: bookItems[i].volumeInfo.authors,
+  //           description: bookItems[i].volumeInfo.description,
+  //           image: bookItems[i].volumeInfo.imageLinks.thumbnail,
+  //           link: bookItems[i].volumeInfo.infoLink
+  //         }
+  //         this.setState({
+  //           bookData: book
+  //         })
+  //         console.log(this.state.bookData);
+  //       }
+  //     })
+  // }
+
+
+  async getBook() {
     const userInput = this.state.value
-    axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=:${userInput}`
-      ).then(bookData => {
-        let bookItems = bookData.data.items;
-        for (let i = 0; i < bookItems.length; i++) {
-          //console.log(bookItems[i])
-          const book = {
-            title: bookItems[i].volumeInfo.title,
-            author: bookItems[i].volumeInfo.authors,
-            description: bookItems[i].volumeInfo.description,
-            image: bookItems[i].volumeInfo.imageLinks.thumbnail,
-            link: bookItems[i].volumeInfo.infoLink
-          }
-          this.setState({
-            bookData: book
-          })
-          console.log(this.state.bookData)
-        }
-      })
+    const bookData = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=:${userInput}`);
+    let bookItems = bookData.data.items;
+    let mybooks = []
+    for (let i = 0; i < bookItems.length; i++) {
+      //console.log(bookItems[i])
+      const book = {
+        title: bookItems[i].volumeInfo.title,
+        author: bookItems[i].volumeInfo.authors,
+        description: bookItems[i].volumeInfo.description,
+        image: bookItems[i].volumeInfo.imageLinks.thumbnail,
+        link: bookItems[i].volumeInfo.infoLink
+      };
+      mybooks.push(book)
+    }
+    this.setState({
+      bookData: mybooks
+    },
+      () => console.log(this.state.bookData)
+    )
   }
 
   handleClick() {
@@ -55,10 +78,33 @@ class App extends Component {
       value: event.target.value
     })
   }
+  instanceFunction(index) {
+    axios.post("/api/books", this.state.bookData[index]).then(response => console.log(response))
+  }
+
+  renderAll() {
+    return (this.state.bookData.map((book, index) => {
+      return (
+        <div key={index}>
+          <h3>Book Title: {book.title}</h3>
+          <h4>Authors: {book.author}</h4>
+          <img src={book.image} alt="" className="imgContainer"></img>
+          <p>Description:{book.description}</p>
+          <p>Link: {book.link}</p>
+          <button className="save" onClick={() => this.instanceFunction(index)}>Save</button>
+          <button className="view">View</button>
+        </div>
+      )
+    })
+    )
+  }
+
 
   render() {
+
     return (
       <div className="App">
+
         <Router>
           <Nav />
           <Link to="/" className="link">Home</Link>
@@ -71,11 +117,14 @@ class App extends Component {
                 click={this.handleClick}
                 value={this.userInput}
               />
+              {this.renderAll()}
               <Results
                 title={this.state.bookData.title}
                 author={this.state.bookData.author}
                 image={this.state.bookData.image}
                 description={this.state.bookData.description}
+                link={this.state.bookData.link}
+
               >
               </Results>
             </Route>

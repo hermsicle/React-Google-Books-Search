@@ -71,7 +71,8 @@ class App extends Component {
           <h3 className="title">Book Title: {book.title}</h3>
           <h4>Authors: {book.author}</h4>
           <img src={book.image} alt="" className="imgContainer"></img>
-          <p>Description:{book.description}</p>
+          <p>Description:</p>
+          <p>{book.description}</p>
           <p>Link: {book.link}</p>
           <button className="save" onClick={() => this.instanceFunction(index)}>Save</button>
           <button className="view">View</button>
@@ -88,6 +89,8 @@ class App extends Component {
         this.setState({ savedBooks: book })
       })
   }
+
+
 
   renderSavedBooks() {
     return (this.state.savedBooks.map((books, index) => {

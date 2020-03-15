@@ -75,7 +75,6 @@ class App extends Component {
           <p>{book.description}</p>
           <p>Link: {book.link}</p>
           <button className="save" onClick={() => this.instanceFunction(index)}>Save</button>
-          <button className="view">View</button>
         </div>
       )
     })
@@ -105,7 +104,6 @@ class App extends Component {
           <p>Description:{books.description}</p>
           <p>Link: {books.link}</p>
           <button className="delete" onClick={() => this.deleteBook()}>delete</button>
-          <button className="view">View</button>
         </div >
       )
     })
@@ -113,7 +111,8 @@ class App extends Component {
   }
 
   deleteBook() {
-    axios.get("/api/books/:")
+    console.log('Book has been deleted from db')
+
   }
 
 

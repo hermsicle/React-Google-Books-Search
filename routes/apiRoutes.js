@@ -14,7 +14,7 @@ router.get("/books", (req, res) => {
 router.post("/books", (req, res) => {
     db.GoogleBooks.create({
         title: req.body.title,
-        authors: req.body.authors,
+        author: req.body.author,
         description: req.body.description,
         image: req.body.image,
         link: req.body.link
@@ -41,5 +41,7 @@ router.delete("/books/:id", (req, res) => {
         res.send("success")
     })
 })
+
+
 
 module.exports = router;

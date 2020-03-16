@@ -22,6 +22,7 @@ class App extends Component {
     this.getBook = this.getBook.bind(this)
     this.renderAll = this.renderAll.bind(this)
     this.instanceFunction = this.instanceFunction.bind(this)
+    this.deleteBook = this.deleteBook.bind(this)
   }
 
   async getBook() {
@@ -89,8 +90,6 @@ class App extends Component {
       })
   }
 
-
-
   renderSavedBooks() {
     return (this.state.savedBooks.map((books, index) => {
       return (
@@ -103,18 +102,17 @@ class App extends Component {
           </img>
           <p>Description:{books.description}</p>
           <p>Link: {books.link}</p>
-          <button className="delete" onClick={() => this.deleteBook()}>delete</button>
+          <button className="delete" onClick={() => this.deleteBook(books._id)}>delete</button>
         </div >
       )
     })
     )
   }
 
-  deleteBook() {
-    console.log('Book has been deleted from db')
-
+  deleteBook(para) {
+    console.log(para)
+    axios.delete('/api/delete/' + para).then(window.location.reload(true))
   }
-
 
 
   render() {

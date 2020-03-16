@@ -34,11 +34,12 @@ router.get('/find/:id', (req, res) => {
 })
 
 //Create api delete request to delete specific books
-router.delete("/books/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
     db.GoogleBooks.deleteOne({
         _id: req.params.id
     }).then(() => {
-        res.send("success")
+        console.log("success")
+        res.json("success")
     })
 })
 
